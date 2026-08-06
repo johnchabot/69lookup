@@ -13,7 +13,8 @@ it's like file_id.diz but kinda better
     ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
-apps/
+apps
+ app.py - search, statistics, filel details, responsive mobile/desktop
 
 scripts/
  trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
