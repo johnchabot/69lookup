@@ -1,9 +1,7 @@
 # 69lookup
-it's like file_id.diz but kinda better
-
-Meaningfully understand every single file -- spanning eras, formats, devices 
-"A file is not just bytes but echos in multidimensional space"
-
+Meaningfully understand every single file -- spanning eras, formats, devices  
+"A file is not just bytes but echos in multidimensional space"  
+  
 # Features
     ✅ Bash-driven "Workflow Engine" that uses JSON5, YAML, ND and "logic"
     ✅ Human-first, low C02 after that
@@ -18,7 +16,11 @@ Meaningfully understand every single file -- spanning eras, formats, devices
     ✅ simple TUI (Terminal UI) for browsing the database
     🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
 
+rules
+Conflict Resolution Rules (conflict_rules.json)
 
+
+  
 # Files and Folders  
 • trawl.sh                   # (check/add/pull/scrape)  
 • classify_filetype.sh       # look inside File type/era detection  Identifies what a file IS  
@@ -44,7 +46,12 @@ export_from_markdown.sh - Export to CSV/JSON
 • parse_3d_metadata.sh       # OBJ, PLY, GLTF, DICOM parser  
 • parse_document_metadata.sh #  PDF, DOCX, MD parser  
 • parse_archive_metadata.sh - ZIP, RAR, 7Z parser  
- 
+While get_filetype_metadata.sh covers the basics, we didn't write dedicated deep parsers for:
+Documents (parse_document_metadata.sh) – Extract title, author, word count, page count, embedded images, etc. for PDF, DOCX, ODT, MD.
+Archives (parse_archive_metadata.sh) – Detailed listing of archive contents (file names, sizes, compression ratios).
+Audio (parse_audio_metadata.sh) – Deep ID3/FLAC tag extraction (album, artist, genre, bitrate, sample rate).
+Code/Web (parse_code_metadata.sh) – Detect programming language, line count, function count, dependencies.
+
 install/  
 • schema.sql   # Full schema with tables, indexes, and views — placed at the project root.
  hierarchy_seed.sql # It inserts all categories and subcategories from our extensive taxonomy.)
@@ -53,24 +60,6 @@ install/
 
 ├── file_archive.db             # Main SQLite database (created on first run)
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
-
-
-
-rules
-Conflict Resolution Rules (conflict_rules.json)
-
-
-1. Specialized Format Metadata (Deeper, format‑specific)
-
-While get_filetype_metadata.sh covers the basics, we didn't write dedicated deep parsers for:
-
-    Documents (parse_document_metadata.sh) – Extract title, author, word count, page count, embedded images, etc. for PDF, DOCX, ODT, MD.
-
-    Archives (parse_archive_metadata.sh) – Detailed listing of archive contents (file names, sizes, compression ratios).
-
-    Audio (parse_audio_metadata.sh) – Deep ID3/FLAC tag extraction (album, artist, genre, bitrate, sample rate).
-
-    Code/Web (parse_code_metadata.sh) – Detect programming language, line count, function count, dependencies.
 
 ✅ Dependencies
 Tool	Used For	Install
