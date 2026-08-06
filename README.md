@@ -1,10 +1,9 @@
 # 69lookup
 it's like file_id.diz but more better
 
- PRAWN MANAGEMENT SYSTEM v5.0                           │
+ PRAWN MANAGEMENT SYSTEM v5.0
  Meaningfully understand every single file -- spanning eras, formats, devices 
  "A file is not just bytes but echos in multidimensional space"
-
 
     ✅ Human-first, then JSON and C02 footprint
     ✅ Transparent and self-documenting somehow
@@ -33,17 +32,18 @@ Binaries
  Apps
 
 
- 
 
-~/file_ingest/
-├── bin/
-│   ├── file_ingest.sh          # Main dispatcher (SQLite-enabled)
+├── scripts/
+│   ├── ingest.sh          # Main dispatcher (SQLite-enabled)
 │   ├── classify_filetype.sh
 │   ├── device_detector.sh
 │   ├── hierarchy_manager.sh
 │   ├── media_tools.sh
-│   ├── migrate_md_to_sqlite.sh
+│
+            instsall/
+   ├── migrate_md_to_sqlite.sh
 │   └── db_init.sh
+            
 ├── web/
 │   ├── app.py                  # Flask web UI
 │   └── templates/
