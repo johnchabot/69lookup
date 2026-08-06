@@ -16,3 +16,4 @@ there are actually many dependencies you liar
     ✅ ffmpeg, ffprobe
     ✅ 
   
+simple TUI (Terminal UI) for browsing the database
