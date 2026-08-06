@@ -48,7 +48,7 @@ apps/templates/
 tools/  
 • scene_detection.sh         # advanced scene detection  mediachache/scene/<md5>/-HHMMSS.jpg  
 • transcript_extract.sh      # Supports OpenAI Whisper, Whisper.cpp (fast CPU), and Vosk (lightweight offline)   media_cache/transcripts/<md5>/<md5>.srt and .vtt  
-• get_filetype_metadata.sh   # grabs basics (file size, modified date) + nice-to-haves (video/audio/image/document/archive/3d/retro)
+• get_filetype_metadata.sh   # grabs basics (file size, modified date) + nice-to-haves (video/audio/image/document/archive/3d/retro) OBJ (vertices, faces, objects, groups), STL (ascii vs binary, triangle estimate, PLY (vertices/faces from header, and ascii/binary), DICOM, 
 generate_stats.sh      - Database statistics  
 export_from_markdown.sh - Export to CSV/JSON   
 
