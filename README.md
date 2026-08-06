@@ -2,9 +2,9 @@
 it's like file_id.diz but more better
 
  PRAWN MANAGEMENT SYSTEM v5.0                           │
- Track, organize and meaningfully understand every single file, spanning eras, formats, devices 
- "A file is not just bytes, it exists in multidimensional space"
- Location (Device) × Type (Hierarchy) × Content (MD5) × Context (Metadata) × History (Timeline)
+ Meaningfully understand every single file -- spanning eras, formats, devices 
+ "A file is not just bytes but echos in multidimensional space"
+
 
     ✅ Human-first, then JSON and C02 footprint
     ✅ Transparent and self-documenting somehow
@@ -16,10 +16,11 @@ better than file_id.diz, how exactly
 
 Privacy Doesn't Meta
 
-A "Location" is not just a path string. It's a           │  │
-│  │  composition of: Device × Volume × Path × Context
+"Location" is not just a path string. It's a composition of: 
+* Device × Volume × Path × Context
+* Location (Device) × Type (Hierarchy) × Content (MD5) × Context (Metadata) × History (Timeline)
 
-METADATA (What's inside is what counts) 
+Understanding METADATA (What's inside is what counts) 
 Image (Dimensions, Colours, Megapixels, GPS)
  3D (Favets, Verteces, Format)
 Video (FPS, Height, Duration, 
@@ -30,6 +31,37 @@ Binaries
  ISO
  Games
  Apps
+
+
+ 
+
+~/file_ingest/
+├── bin/
+│   ├── file_ingest.sh          # Main dispatcher (SQLite-enabled)
+│   ├── classify_filetype.sh
+│   ├── device_detector.sh
+│   ├── hierarchy_manager.sh
+│   ├── media_tools.sh
+│   ├── migrate_md_to_sqlite.sh
+│   └── db_init.sh
+├── web/
+│   ├── app.py                  # Flask web UI
+│   └── templates/
+│       ├── index.html
+│       └── browse.html
+├── schema.sql                  # SQLite schema
+├── file_archive.db             # Main SQLite database (created on first run)
+├── files_index.md              # Optional Markdown backup (keep for human reading)
+└── logs/
+
+
+ SCRIPTS:                                                               │
+│     • file_ingest.sh     - Main dispatcher (check/add/pull)               │
+│     • classify_filetype.sh - File type/era detection                       │
+│     • device_detector.sh - Device/volume detection                         │
+│     • hierarchy_manager.sh - Taxonomy & conflict resolution                │
+│     • media_tools.sh     - Thumbnail, scenes, transcripts                 │
+│     • migrate_md_to_sqlite.sh - Migration to SQLite     
 
 Workflow:
 file_ingest.sh pull a1b2c3d4 md5  
