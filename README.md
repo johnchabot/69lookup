@@ -9,11 +9,23 @@ it's like file_id.diz but more better
     ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
-Scripts
-    ✅ Trawl your files (check, add, pull)
-    ✅ Transparent and self-documenting somehow
-    ✅ Zero dependencies
 
+Supporting Files (still needed)
+
+    classify_filetype.sh
+
+    device_detector.sh
+
+    hierarchy_manager.sh
+
+    media_tools.sh
+
+    schema.sql
+
+
+✅ Trawl your files (check, add, pull)
+✅ Transparent and self-documenting somehow
+✅ Zero dependencies
 
     
 
