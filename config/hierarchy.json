@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "categories": [
+    {
+      "path": "videos",
+      "name": "Videos",
+      "icon": "🎬",
+      "children": [
+        { "path": "videos/movies", "name": "Movies", "icon": "🎬" },
+        { "path": "videos/tv", "name": "TV", "icon": "📺" },
+        { "path": "videos/documentaries", "name": "Documentaries", "icon": "🎥" },
+        { "path": "videos/music_video", "name": "Music Video", "icon": "🎤" },
+        { "path": "videos/webrips", "name": "Webrips", "icon": "🌐" }
+      ]
+    },
+    {
+      "path": "audio",
+      "name": "Audio",
+      "icon": "🎵",
+      "children": [
+        { "path": "audio/books", "name": "Books", "icon": "📖" },
+        { "path": "audio/podcasts", "name": "Podcasts", "icon": "🎙️" },
+        { "path": "audio/samples", "name": "Samples", "icon": "🔊" },
+        { "path": "audio/notifications", "name": "Notifications", "icon": "🔔" },
+        { "path": "audio/piezo", "name": "Piezo", "icon": "🔌" },
+        { "path": "audio/field_recording", "name": "Field Recording", "icon": "🌿" }
+      ]
+    },
+    {
+      "path": "images",
+      "name": "Images",
+      "icon": "🖼️",
+      "children": [
+        { "path": "images/art", "name": "Art", "icon": "🎨" },
+        { "path": "images/screenshots", "name": "Screenshots", "icon": "🖥️" }
+      ]
+    },
+    {
+      "path": "image_3d",
+      "name": "3D",
+      "icon": "🧊",
+      "children": [
+        { "path": "image_3d/characters", "name": "Characters", "icon": "🧑" },
+        { "path": "image_3d/environments", "name": "Environments", "icon": "🌍" },
+        { "path": "image_3d/props", "name": "Props", "icon": "🪑" },
+        { "path": "image_3d/scans", "name": "Scans", "icon": "🔍" },
+        { "path": "image_3d/splats", "name": "Splats", "icon": "🌀" }
+      ]
+    },
+    {
+      "path": "image_vector",
+      "name": "Vector",
+      "icon": "📐",
+      "children": []
+    },
+    {
+      "path": "documents",
+      "name": "Documents",
+      "icon": "📄",
+      "children": []
+    },
+    {
+      "path": "games",
+      "name": "Games",
+      "icon": "🎮",
+      "children": [
+        { "path": "games/nes", "name": "NES", "icon": "🟥" },
+        { "path": "games/snes", "name": "SNES", "icon": "🟨" },
+        { "path": "games/dreamcast", "name": "Dreamcast", "icon": "🌀" },
+        { "path": "games/n64", "name": "N64", "icon": "🔶" },
+        { "path": "games/windows", "name": "Windows", "icon": "🪟" },
+        { "path": "games/mac", "name": "Mac", "icon": "🍎" },
+        { "path": "games/linux", "name": "Linux", "icon": "🐧" },
+        { "path": "games/android", "name": "Android", "icon": "🤖" },
+        { "path": "games/msdos", "name": "MS-DOS", "icon": "💾" }
+      ]
+    }
+  ]
+}
