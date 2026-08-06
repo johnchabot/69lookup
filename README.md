@@ -5,26 +5,27 @@ it's like file_id.diz but kinda better
  Meaningfully understand every single file -- spanning eras, formats, devices 
  "A file is not just bytes but echos in multidimensional space"
 
-    ✅ Human-first < JSON5, low C02 footprint
-    ✅ Trawl your files (check, add, pull)
- 
-    ✅ Bash-driven "Workflow Engine" that uses JSON, YAML, ND and "logic"
+    ✅ Bash-driven "Workflow Engine" that uses JSON5, YAML, ND and "logic"
+    ✅ Human-first, low C02 after that
+    ✅ Trawl your files (check, add, pull, scrape)
+
     ✅ We trade "MD5 hash + filename" for "helpful metadata" safely
     ✅ Transparent and self-documenting somehow
-    ✅ Zero dependencies
+    ✅ Zero fscks given
 
- * trawl.sh                     # (check/add/pull/scrape)
- * classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS: 
- * device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
- * hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
- * media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+69LOOKUP
+• trawl.sh                     # (check/add/pull/scrape)
+• classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS: 
+• device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
+• hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
+• media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
 
 apps/
- * app.py                  # powers search, statistics, file details, responsive mobile/desktop
+• app.py                  # powers search, statistics, file details, responsive mobile/desktop
  
 apps/templates/
- * index.html               # ransforms your SQLite database into a powerful, user-friendly search tool. primary discovery interface — a fast, flexible search engine for your digital archive. Its job is to help you find any file, anywhere, in seconds.
- * browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search
+• index.html               # ransforms your SQLite database into a powerful, user-friendly search tool. primary discovery interface — a fast, flexible search engine for your digital archive. Its job is to help you find any file, anywhere, in seconds.
+• browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search
 
 tools/
 • scene_detection.sh     - Advanced FFmpeg scene detection  
@@ -37,14 +38,11 @@ tools/
 • export_from_markdown.sh - Export to CSV/JSON  
 Hierarchy Manager Script (hierarchy_manager.sh)
 
-
 install/
- schema.sql   # Full schema with tables, indexes, and views — placed at the project root.
+• schema.sql   # Full schema with tables, indexes, and views — placed at the project root.
  hierarchy_seed.sql # It inserts all categories and subcategories from our extensive taxonomy.)
- install.sh   #checks OS info, script +x, dependencies (sqllite3, jq + ffmpeg, ffprobe, exiftool, python3, flask), database (path, tables + initiate or fix), cache directory test, log directory 
- db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
-
-
+• install.sh   #checks OS info, script +x, dependencies (sqllite3, jq + ffmpeg, ffprobe, exiftool, python3, flask), database (path, tables + initiate or fix), cache directory test, log directory 
+• db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
 
 
 Workflow:
