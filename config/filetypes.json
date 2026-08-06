@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "filetypes": {
+    "video": {
+      "extensions": ["mp4", "mov", "avi", "mkv", "webm", "flv", "wmv", "m4v", "mpg", "mpeg"],
+      "icon": "🎬",
+      "description": "Digital Video File"
+    },
+    "image": {
+      "extensions": ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "webp", "heic", "heif", "raw", "cr2", "nef", "arw"],
+      "icon": "🖼️",
+      "description": "Raster Image"
+    },
+    "image_3d": {
+      "extensions": ["obj", "dcm", "dicom", "splat", "ply", "stl", "fbx", "gltf", "glb", "usd", "usda", "usdc"],
+      "icon": "🧊",
+      "description": "3D Model / Point Cloud"
+    },
+    "image_vector": {
+      "extensions": ["svg", "eps", "ai", "cdr", "wmf"],
+      "icon": "📐",
+      "description": "Vector Graphic"
+    },
+    "audio": {
+      "extensions": ["mp3", "flac", "fla", "wav", "aac", "ogg", "wma", "m4a", "opus", "aiff", "mod", "s3m"],
+      "icon": "🎵",
+      "description": "Digital Audio File"
+    },
+    "archive": {
+      "extensions": ["zip", "rar", "7z", "gz", "bz2", "xz", "tar", "tgz", "cab", "arj"],
+      "icon": "📦",
+      "description": "Compressed Archive"
+    },
+    "document": {
+      "extensions": ["pdf", "doc", "docx", "rtf", "pages", "txt", "md", "odt", "ods", "odp", "xls", "xlsx", "ppt", "pptx"],
+      "icon": "📄",
+      "description": "Document / Text File"
+    },
+    "game": {
+      "extensions": ["xex", "xbla", "iso", "nsp", "xci", "rom", "nes", "smc", "gba", "n64", "ps2", "wbfs"],
+      "icon": "🎮",
+      "description": "Game ROM / Console Format"
+    },
+    "web": {
+      "extensions": ["html", "htm", "css", "js", "json", "xml", "yaml", "yml"],
+      "icon": "🌐",
+      "description": "Web / Code File"
+    },
+    "obscure": {
+      "extensions": ["dmd", "dmp", "bin", "dll", "so", "dylib", "exe"],
+      "icon": "🔮",
+      "description": "Obscure / Binary File"
+    }
+  }
+}
