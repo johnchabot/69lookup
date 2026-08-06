@@ -1,0 +1,18 @@
+
+
+
+Painless Install
+
+# 1. Create the database
+sqlite3 file_archive.db < schema.sql
+
+# 2. Populate from existing Markdown (if any)
+./migrate_md_to_sqlite.sh file_archive.db files_index.md
+
+# 3. Start ingesting new files (SQLite will be populated)
+./file_ingest.sh add ~/Videos "movies" false "videos" "movies"
+
+# 4. Launch the web UI
+python3 app.py
+
+# 5. Open http://localhost:8080 and explore!
