@@ -1,0 +1,88 @@
+           HIERARCHICAL CATEGORY TREE                              
+                                                                          
+│  📁 ROOT                                                
+│  ├── 🎬 Videos                                                            │
+│  │   ├── Movies                                                           │
+│  │   │   ├── Documentary (Non-fiction films)                             │
+│  │   │   ├── TV (Television episodes)                                    │
+│  │   │   ├── Webrip (Web-ripped content)                                 │
+│  │   │   └── Feature (Full-length films)                                 │
+│  │   ├── Music Videos (Music videos/Concerts)                         │
+│  │   ├── Shorts (Short-form video)                                        │
+│  │   ├──                      │
+│  │   └── Home Video (Personal recordings)                                │
+│  │                                                                        │
+│  ├── 🎵 Audio                                                            │
+│  │   ├── Music                                                            │
+│  │   ├── Books (Spoken word books)                                 │
+│  │   ├── Podcasts (Podcast episodes)                                     │
+│  │   ├── Samples (Sound samples/loops)                                   │
+│  │   ├── Notifications (Alert sounds)                                    │
+│  │   ├── Piezo (Piezoelectric/electronic sounds)                         │
+│  │   └── Field Recording (Environmental recordings)                      │
+│  │                                                                        │
+│  ├── 🖼️ Images                                                           │
+│  │   ├── Art                                                              │
+│  │   │   ├── Digital (Computer-generated art)                            │
+│  │   │   ├── Traditional (Scanned traditional art)                       │
+│  │   │   └── Pixel Art (Pixel-based art)                                 │
+│  │   ├── Screenshots (Screen captures)                                   │
+│  │   ├── Meme (Internet memes)                                           │
+│  │   └── Retro                                                            │
+│  │       ├── ANSI Art (ANSI/ASCII art)                                   │
+│  │       ├── BBS Art (BBS-era artwork)                                   │
+│  │       └── Demoscene (Demoscene graphics)                              │
+│  │                                                                        │
+│  ├── 🧊 3D                                                                │
+│  │   ├── Models                                                          │
+│  │   │   ├── Characters (Character models)                               │
+│  │   │   ├── Environments (Environment/scene models)                     │
+│  │   │   └── Props (Prop/object models)                                  │
+│  │   ├── Scans (3D scans/photogrammetry)                                 │
+│  │   ├── Splats (Gaussian splat files)                                   │
+│  │   └── Voxel (Voxel-based models)                                      │
+│  │                                                                        │
+│  ├── 📄 Documents                                                        │
+│  │   ├── Text                                                             │
+│  │   │   ├── Notes (Quick notes)                                         │
+│  │   │   ├── Markdown (Markdown documents)                               │
+│  │   │   ├── Code (Source code files)                                    │
+│  │   │   └── Logs (Log files)                                            │
+│  │                                                     │
+│  │       ├── Word (Word documents)                                       │
+│  │       ├── Excel (Spreadsheets)                                        │
+│  │       ├── PowerPoint (Presentations)                                  │
+│  │       └── PDF (PDF files)                                             │
+│  │                                                                        │
+│  ├── 🎮 Games                                                             │
+│  │   ├── ROMs                                                             │
+│  │   │   ├── NES (Nintendo Entertainment System)                         │
+│  │   │   ├── SNES (Super Nintendo)                                       │
+│  │   │   ├── GameBoy                                                     │
+│  │   │   │   ├── GB (GameBoy)                                            │
+│  │   │   │   ├── GBC (GameBoy Color)                                     │
+│  │   │   │   ├── GBA (GameBoy Advance)                                   │
+│  │   │   │   └── 3DS (Nintendo 3DS)                                      │
+│  │   │   ├── Dreamcast (Sega Dreamcast)                                  │
+│  │   │   ├── N64 (Nintendo 64)                                           │
+│  │   │   ├── PlayStation                                                 │
+│  │   │   │   ├── PS1 (PlayStation 1)                                     │
+│  │   │   │   ├── PS2 (PlayStation 2)                                     │
+│  │   │   │   ├── PS3 (PlayStation 3)                                     │
+│  │   │   │   └── PSP (PlayStation Portable)                              │
+│  │   │   └── Sega                                                         │
+│  │   │       ├── Genesis (Sega Genesis/Mega Drive)                       │
+│  │   │       └── Saturn (Sega Saturn)                                    │
+│  │   ├── Executables                                                      │
+│  │   │   ├── Windows (Windows games)                                     │
+│  │   │   ├── Mac (Mac games)                                             │
+│  │   │   ├── Linux (Linux games)                                         │
+│  │   │   ├── Android                                                     │
+│  │   │   │   ├── Android TV (Android TV games)                           │
+│  │   │   │   └── Android Tablet (Android tablet games)                   │
+│  │   │   └── MS-DOS (MS-DOS games)                                       │
+│  │   └── ISO (Game disc images)                                          │
+│  │                                                                        │
+│  ├── ⚙️ Binaries                                                         │
+│  │   ├── Apps (Executable files)                                 │
+│  │   ├── Datavbases (System libraries)                                    │
