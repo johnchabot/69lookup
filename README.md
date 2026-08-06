@@ -15,41 +15,46 @@ it's like file_id.diz but kinda better
 
 apps
  app.py - search, statistics, filel details, responsive mobile/desktop
+ templates/
+  index.html (search UI)
+  browse.html  (browse UI) ← NEW
 
 scripts/
- ** trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
- ** classify_filetype.sh         # look inside File type/era detection 
- ** device_detector.sh           # Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
- ** hierarchy_manager.sh  (path, get_category, assign, suggest, resolve_conflict, detect_conflicts    Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
- ** media_tools.sh               # (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
-
-scripts/install
-** db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
+ * trawl.sh                     # (check/add/pull/scrape)
+ * classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS: 
+ * device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
+ * hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
+ * media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
 
 tools/
+• scene_detection.sh     - Advanced FFmpeg scene detection  
+• transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper 
+• get_filetype_metadata.sh - Type-specific metadata parsers  
+• parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser  
+• parse_document_metadata.sh - PDF, DOCX, MD parser 
+• parse_archive_metadata.sh - ZIP, RAR, 7Z parser  
 
-    trawl.sh will automatically use the database file set by DB_PATH (default: ./file_archive.db).
-
-    app.py uses the same default path, but you can override via environment variable.
-
+• generate_stats.sh      - Database statistics
+• export_from_markdown.sh - Export to CSV/JSON  
+Hierarchy Manager Script (hierarchy_manager.sh)
+   
 
 
 
 install/
- schema.sql - Full schema with tables, indexes, and views — placed at the project root.
- hierarchy_seed.sql lace at the project root. It inserts all categories and subcategories from our extensive taxonomy.)
+ schema.sql   # Full schema with tables, indexes, and views — placed at the project root.
+ hierarchy_seed.sql # It inserts all categories and subcategories from our extensive taxonomy.)
+ install.sh   #checks OS info, script +x, dependencies (sqllite3, jq + ffmpeg, ffprobe, exiftool, python3, flask), database (path, tables + initiate or fix), cache directory test, log directory 
+ db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
+
+
+VARIABLES
+DB_PATH, CACHE_PATH, LOG_DIR
+    app.py uses the same default path, but you can override via environment variable.
+     trawl.sh will automatically use the database file set by DB_PATH (default: ./file_archive.db).
 
 Workflow:
 file_ingest.sh pull a1b2c3d4 md5  
-
-classify_filetype.sh   Identifies what a file IS:  
-device_detector.sh   nswers: WHERE did this file come from? 
- hierarchy_manager.sh HOW should we organize this file?  
-   media_tools.sh      Enriches files with derived media assets: 
-
-
-    schema.sql
-device_detector.sh  Can load additional metadata from devices.json (if you want to define custom metadata per device type).
 
 "Location" is not just a path string. It's a composition of: 
 * Device × Volume × Path × Context
@@ -96,16 +101,7 @@ resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(base
 
 supporting scripts
 
- • scene_detection.sh     - Advanced FFmpeg scene detection   ││  │
-│  │  │  • transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper ││  │
-│  │  │  • get_filetype_metadata.sh - Type-specific metadata parsers  ││  │
-│  │  │  • parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser    ││  │
-│  │  │  • parse_document_metadata.sh - PDF, DOCX, MD parser        ││  │
-│  │  │  • parse_archive_metadata.sh - ZIP, RAR, 7Z parser          ││  │
-│  │  │  • db_init.sh             - Initialize markdown database      ││  │
-│  │  │  • generate_stats.sh      - Database statistics              ││  │
-│  │  │  • export_from_markdown.sh - Export to CSV/JSON  
-Hierarchy Manager Script (hierarchy_manager.sh)
+
    
   
 PAY EXTRA FOR
