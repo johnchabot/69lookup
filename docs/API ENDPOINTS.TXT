@@ -1,0 +1,9 @@
+🔗 API Endpoints Summary
+Endpoint	Method	Description
+/	GET	Search UI (index.html)
+/browse	GET	Browse UI (browse.html)
+/api/stats	GET	Statistics dashboard
+/api/search?q=&type=	GET	Search files (type: md5, filename, type, tag, category)
+/api/files/<md5>	GET	Full file details
+/api/hierarchy	GET	Flat list of all categories
+/api/hierarchy/tree	GET	Nested tree of all categories
