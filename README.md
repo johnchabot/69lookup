@@ -1,5 +1,5 @@
 # 69lookup
-it's like file_id.diz but more better
+it's like file_id.diz but kinda better
 
  PRAWN MANAGEMENT SYSTEM v5.0
  Meaningfully understand every single file -- spanning eras, formats, devices 
@@ -13,16 +13,9 @@ it's like file_id.diz but more better
 ├── scripts/
 │   ├── trawl.sh                      # Main dispatcher (SQLite-enabled)
 │   ├── classify_filetype.sh         # see whats inside
-│   ├── device_detector.sh
+│   ├── device_detector.sh         # location matters
 │   ├── hierarchy_manager.sh
 │   ├── media_tools.sh
-
-
-Supporting Files (still needed)
-
-    classify_filetype.sh
-
-    device_detector.sh
 
     hierarchy_manager.sh
 
