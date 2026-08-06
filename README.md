@@ -16,6 +16,9 @@ better than file_id.diz, how exactly
 
 Privacy Doesn't Meta
 
+A "Location" is not just a path string. It's a           │  │
+│  │  composition of: Device × Volume × Path × Context
+
 METADATA (What's inside is what counts) 
 Image (Dimensions, Colours, Megapixels, GPS)
  3D (Favets, Verteces, Format)
@@ -27,6 +30,29 @@ Binaries
  ISO
  Games
  Apps
+
+Workflow:
+file_ingest.sh pull a1b2c3d4 md5  
+
+classify_filetype.sh   Identifies what a file IS:  
+device_detector.sh   nswers: WHERE did this file come from? 
+ hierarchy_manager.sh HOW should we organize this file?  
+   media_tools.sh      Enriches files with derived media assets: 
+
+
+supporting scripts
+
+install scripts
+ • scene_detection.sh     - Advanced FFmpeg scene detection   ││  │
+│  │  │  • transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper ││  │
+│  │  │  • get_filetype_metadata.sh - Type-specific metadata parsers  ││  │
+│  │  │  • parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser    ││  │
+│  │  │  • parse_document_metadata.sh - PDF, DOCX, MD parser        ││  │
+│  │  │  • parse_archive_metadata.sh - ZIP, RAR, 7Z parser          ││  │
+│  │  │  • db_init.sh             - Initialize markdown database      ││  │
+│  │  │  • generate_stats.sh      - Database statistics              ││  │
+│  │  │  • export_from_markdown.sh - Export to CSV/JSON  
+
     
 there are actually many dependencies you liar
     ✅ jq, 
