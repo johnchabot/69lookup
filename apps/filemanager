@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+# web_ui.py - Simple web interface for the file archive
+
+import sqlite3
+import json
+from flask import Flask, render_template, request, jsonify
+
+app = Flask(__name__)
+DB_PATH = './file_archive.db'
+
+def get_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/search')
+def search():
+    query = request.args.get('q', '')
+    search_type = request.args.get('type', 'filename')
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    if search_type == 'md5':
+        cursor.execute("""
+            SELECT * FROM v_files_full 
+            WHERE md5 LIKE ?
+        """, (f'%{query}%',))
+    elif search_type == 'filename':
+        cursor.execute("""
+            SELECT * FROM v_files_full 
+            WHERE filename LIKE ?
+        """, (f'%{query}%',))
+    elif search_type == 'type':
+        cursor.execute("""
+            SELECT * FROM v_files_full 
+            WHERE file_type = ?
+        """, (query,))
+    elif search_type == 'tag':
+        cursor.execute("""
+            SELECT * FROM v_files_full 
+            WHERE tags LIKE ?
+        """, (f'%{query}%',))
+    elif search_type == 'category':
+        cursor.execute("""
+            SELECT f.* FROM v_files_full f
+            JOIN file_hierarchy fh ON f.file_id = fh.file_id
+            JOIN hierarchy h ON fh.category_id = h.category_id
+            WHERE h.path LIKE ?
+        """, (f'%{query}%',))
+    else:
+        return jsonify({'error': 'Unknown search type'})
+    
+    results = [dict(row) for row in cursor.fetchall()]
+    return jsonify(results)
+
+@app.route('/api/stats')
+def stats():
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    stats = {}
+    
+    # Total files
+    cursor.execute("SELECT COUNT(*) FROM files")
+    stats['total_files'] = cursor.fetchone()[0]
+    
+    # By file type
+    cursor.execute("SELECT file_type, COUNT(*) FROM files GROUP BY file_type")
+    stats['by_type'] = [{'type': row[0], 'count': row[1]} for row in cursor.fetchall()]
+    
+    # By device type
+    cursor.execute("SELECT device_type, COUNT(*) FROM v_files_full GROUP BY device_type")
+    stats['by_device'] = [{'type': row[0], 'count': row[1]} for row in cursor.fetchall()]
+    
+    # Total size
+    cursor.execute("SELECT SUM(size_bytes) FROM files")
+    stats['total_bytes'] = cursor.fetchone()[0] or 0
+    
+    return jsonify(stats)
+
+@app.route('/api/files/<md5>')
+def file_details(md5):
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM v_files_full WHERE md5 = ?", (md5,))
+    result = cursor.fetchone()
+    
+    if not result:
+        return jsonify({'error': 'File not found'}), 404
+    
+    return jsonify(dict(result))
+
+@app.route('/browse')
+def browse():
+    return render_template('browse.html')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=True)
