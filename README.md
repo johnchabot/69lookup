@@ -13,21 +13,18 @@ it's like file_id.diz but kinda better
     ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
-
-I NEED TO ASK FOR AN Updated app.py (add the /api/hierarchy endpoint)
-
-apps
- app.py - search, statistics, filel details, responsive mobile/desktop
- templates/
-  index.html (search UI)
-  browse.html  (browse UI) ← NEW
-
-scripts/
  * trawl.sh                     # (check/add/pull/scrape)
  * classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS: 
  * device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
  * hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
  * media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+
+apps/
+ * app.py                  # powers search, statistics, file details, responsive mobile/desktop
+ 
+apps/templates/
+ * index.html               # ransforms your SQLite database into a powerful, user-friendly search tool. primary discovery interface — a fast, flexible search engine for your digital archive. Its job is to help you find any file, anywhere, in seconds.
+ * browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search
 
 tools/
 • scene_detection.sh     - Advanced FFmpeg scene detection  
@@ -36,12 +33,9 @@ tools/
 • parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser  
 • parse_document_metadata.sh - PDF, DOCX, MD parser 
 • parse_archive_metadata.sh - ZIP, RAR, 7Z parser  
-
 • generate_stats.sh      - Database statistics
 • export_from_markdown.sh - Export to CSV/JSON  
 Hierarchy Manager Script (hierarchy_manager.sh)
-   
-
 
 
 install/
@@ -51,10 +45,7 @@ install/
  db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
 
 
-VARIABLES
-DB_PATH, CACHE_PATH, LOG_DIR
-    app.py uses the same default path, but you can override via environment variable.
-     trawl.sh will automatically use the database file set by DB_PATH (default: ./file_archive.db).
+
 
 Workflow:
 file_ingest.sh pull a1b2c3d4 md5  
@@ -88,40 +79,13 @@ conflicts=$(./hierarchy_manager.sh detect_conflicts "$md5" "$(basename "$file")"
 # Resolve conflicts
 resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(basename "$file")" "$tags" "$batch_mode")
 
-# Then handle based on resolution...
-
-
-            instsall/
-   ├── migrate_md_to_sqlite.sh
-│   └── db_init.sh
-            
-│   └── templates/
-│       ├── index.html
-│       └── browse.html
 ├── file_archive.db             # Main SQLite database (created on first run)
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
 
-
-supporting scripts
-
-
-   
-  
 PAY EXTRA FOR
     ✅ Transcript extraction for videos (saved as .srt and .vtt)
     ✅ simple TUI (Terminal UI) for browsing the database
     🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
-
-
-    pendencies
-
-To use all features, install:
-Tool	Install
-ffmpeg	brew install ffmpeg (macOS) or apt install ffmpeg (Linux)
-exiftool	brew install exiftool (macOS) or apt install exiftool (Linux)
-whisper	pip install openai-whisper
-whisper.cpp	Build from source
-vosk-transcribe	pip install vosk-transcribe
 
 
 schema
