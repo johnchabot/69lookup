@@ -1,1 +1,4 @@
 
+"Location" is not just a path string. It's a composition of: 
+* Device × Volume × Path × Context
+* Location (Device) × Type (Hierarchy) × Content (MD5) × Context (Metadata) × History (Timeline)
