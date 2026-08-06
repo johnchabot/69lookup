@@ -1,1 +1,39 @@
 
+
+
+Categories, Subcategories, Filetypes
+Videos 
+Music
+Documents (PDF, Microsoft Office, Text)
+Games (XBOX360, SNES, Windows)
+Images (3D, Vector, Art, )
+Audio (Notifications)
+
+Aware of
+Filepath w/infinite recursion
+Devices
+archives
+the "past"
+
+Current Stats + History
+* TotalByteFileType
+* CountBySubcategory
+
+
+
+Records with: MD5, filename, filetype,      │  │  │
+│  │  │ metadata, tags, status, timestamps  
+
+Logic Tree
+- Check
+- Get
+
+
+
+Dependencies and why
+ - Video: ffprobe                                 │  │
+│  │  - Images: exiftool                               │  │
+│  │  - 3D: custom parsers                            │  │
+│  │  - Documents: pdfinfo, docx2txt                  │  │
+│  │  - Archives: zipinfo, unrar                      │  │
+│  │  - ANSI/BBS: custom parser
