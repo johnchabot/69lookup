@@ -17,17 +17,20 @@ apps
  app.py - search, statistics, filel details, responsive mobile/desktop
 
 scripts/
- trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
- 
- classify_filetype.sh         # look inside File type/era detection 
- 
- device_detector.sh           # Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
- 
- hierarchy_manager.sh  (path, get_category, assign, suggest, resolve_conflict, detect_conflicts    Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
- 
- media_tools.sh               # (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+ ** trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
+ ** classify_filetype.sh         # look inside File type/era detection 
+ ** device_detector.sh           # Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
+ ** hierarchy_manager.sh  (path, get_category, assign, suggest, resolve_conflict, detect_conflicts    Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
+ ** media_tools.sh               # (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+
+scripts/install
+** db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
 
 tools/
+
+    trawl.sh will automatically use the database file set by DB_PATH (default: ./file_archive.db).
+
+    app.py uses the same default path, but you can override via environment variable.
 
 install/
 
