@@ -10,6 +10,14 @@ it's like file_id.diz but more better
     ✅ Zero dependencies
 
 
+├── scripts/
+│   ├── trawl.sh                      # Main dispatcher (SQLite-enabled)
+│   ├── classify_filetype.sh         # see whats inside
+│   ├── device_detector.sh
+│   ├── hierarchy_manager.sh
+│   ├── media_tools.sh
+
+
 Supporting Files (still needed)
 
     classify_filetype.sh
@@ -53,12 +61,6 @@ Binaries
 
 
 
-├── scripts/
-│   ├── ingest.sh          # Main dispatcher (SQLite-enabled)
-│   ├── classify_filetype.sh
-│   ├── device_detector.sh
-│   ├── hierarchy_manager.sh
-│   ├── media_tools.sh
 │
             instsall/
    ├── migrate_md_to_sqlite.sh
