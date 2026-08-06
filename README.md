@@ -10,16 +10,22 @@ it's like file_id.diz but kinda better
  
     ✅ Bash-driven "Workflow Engine" that uses JSON, YAML, ND and "logic"
     ✅ We trade "MD5 hash + filename" for "helpful metadata" safely
-       ✅ Transparent and self-documenting somehow
+    ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
+apps/
 
-├── scripts/
-│   ├── trawl.sh                     # scrape by (SQLite-enabled)
-│   ├── classify_filetype.sh         # look inside
-│   ├── device_detector.sh           # context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, icloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
-│   ├── hierarchy_manager.sh
-│   ├── media_tools.sh
+scripts/
+ trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
+ classify_filetype.sh         # look inside File type/era detection 
+ device_detector.sh           # Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
+ hierarchy_manager.sh  (path, get_category, assign, suggest, resolve_conflict, detect_conflicts    Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
+ media_tools.sh               # (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+
+tools/
+
+install/
+
 
     schema.sql
 device_detector.sh  Can load additional metadata from devices.json (if you want to define custom metadata per device type).
@@ -41,8 +47,21 @@ Binaries
  Apps
 
 
+# Suggest category
+category=$(./hierarchy_manager.sh suggest "$file_type")
 
-│
+# Get hierarchy path
+hierarchy_path=$(./hierarchy_manager.sh path "$category" "$subcategory")
+
+# Detect conflicts
+conflicts=$(./hierarchy_manager.sh detect_conflicts "$md5" "$(basename "$file")" "$file_type" "$device_serial")
+
+# Resolve conflicts
+resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(basename "$file")" "$tags" "$batch_mode")
+
+# Then handle based on resolution...
+
+
             instsall/
    ├── migrate_md_to_sqlite.sh
 │   └── db_init.sh
@@ -57,13 +76,7 @@ Binaries
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
 └── logs/
 
-
- SCRIPTS:                                                               │
-│     • file_ingest.sh     - Main dispatcher (check/add/pull)               │
-│     • classify_filetype.sh - File type/era detection                       │
-│     • device_detector.sh - Device/volume detection                         │
-│     • hierarchy_manager.sh - Taxonomy & conflict resolution                │
-│     • media_tools.sh     - Thumbnail, scenes, transcripts                 │
+│     • media_tools.sh     -              │
 │     • migrate_md_to_sqlite.sh - Migration to SQLite     
 
 Workflow:
@@ -99,6 +112,18 @@ PAY EXTRA FOR
     ✅ Transcript extraction for videos (saved as .srt and .vtt)
     ✅ simple TUI (Terminal UI) for browsing the database
     🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
+
+
+    pendencies
+
+To use all features, install:
+Tool	Install
+ffmpeg	brew install ffmpeg (macOS) or apt install ffmpeg (Linux)
+exiftool	brew install exiftool (macOS) or apt install exiftool (Linux)
+whisper	pip install openai-whisper
+whisper.cpp	Build from source
+vosk-transcribe	pip install vosk-transcribe
+
 
 schema
 The Hierarchy Schema (hierarchy.json)
