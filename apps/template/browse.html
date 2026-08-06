@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>📂 Browse Archive</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        header { background: #2c3e50; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        header h1 { font-size: 24px; }
+        header a { color: #3498db; text-decoration: none; background: rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 4px; }
+        header a:hover { background: rgba(255,255,255,0.2); }
+        .browse-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+        .sidebar { flex: 0 0 280px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 15px; max-height: calc(100vh - 200px); overflow-y: auto; }
+        .sidebar h3 { font-size: 14px; text-transform: uppercase; color: #7f8c8d; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .category-tree { list-style: none; padding-left: 0; }
+        .category-tree li { padding: 0; }
+        .category-tree .cat-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 4px; cursor: pointer; transition: background 0.15s; font-size: 14px; }
+        .category-tree .cat-item:hover { background: #f0f0f0; }
+        .category-tree .cat-item.active { background: #3498db; color: white; }
+        .category-tree .cat-item .icon { font-size: 18px; }
+        .category-tree .cat-item .name { flex: 1; }
+        .category-tree .cat-item .count { font-size: 11px; background: #ecf0f1; color: #7f8c8d; padding: 1px 8px; border-radius: 10px; }
+        .category-tree .cat-item.active .count { background: rgba(255,255,255,0.3); color: white; }
+        .category-tree .sub-tree { padding-left: 24px; list-style: none; }
+        .category-tree .sub-tree .cat-item { padding-left: 10px; }
+        .main-panel { flex: 1; min-width: 300px; }
+        .panel-header { background: white; padding: 15px 20px; border-radius: 8px 8px 0 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .panel-header h2 { font-size: 18px; }
+        .panel-header .badge { font-size: 13px; background: #ecf0f1; padding: 4px 12px; border-radius: 12px; }
+        .results { background: white; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .result-item { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; }
+        .result-item:hover { background: #f8f9fa; }
+        .result-item .icon { font-size: 28px; }
+        .result-item .info { flex: 1; min-width: 0; }
+        .result-item .info .name { font-weight: 600; word-break: break-word; }
+        .result-item .info .meta { font-size: 12px; color: #7f8c8d; }
+        .result-item .badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; background: #ecf0f1; white-space: nowrap; }
+        .badge.pending { background: #f39c12; color: white; }
+        .badge.complete { background: #2ecc71; color: white; }
+        .badge.failed { background: #e74c3c; color: white; }
+        .badge.processing { background: #3498db; color: white; }
+        .loading { text-align: center; padding: 40px; color: #7f8c8d; }
+        .empty { text-align: center; padding: 40px; color: #7f8c8d; }
+        .file-detail { background: white; border-radius: 8px; padding: 20px; margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .file-detail h3 { margin-bottom: 15px; }
+        .file-detail .field { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; }
+        .file-detail .field .label { width: 150px; font-weight: 600; color: #7f8c8d; }
+        .file-detail .field .value { flex: 1; word-break: break-word; }
+        .file-detail .field .value code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+        .file-detail pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow: auto; font-size: 12px; max-height: 300px; }
+        @media (max-width: 768px) {
+            .sidebar { flex: 1 1 100%; max-height: none; }
+            .main-panel { flex: 1 1 100%; }
+            .file-detail .field .label { width: 100%; margin-bottom: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📂 Browse Archive</h1>
+            <div>
+                <a href="/">🔍 Search</a>
+                <a href="/browse" style="margin-left:10px;background:rgba(255,255,255,0.2);">📂 Browse</a>
+            </div>
+        </header>
+        
+        <div class="browse-layout">
+            <!-- Sidebar: Hierarchy Tree -->
+            <div class="sidebar" id="sidebar">
+                <h3>📁 Categories</h3>
+                <div id="category-tree">
+                    <div class="loading">Loading categories...</div>
+                </div>
+            </div>
+            
+            <!-- Main Panel: Files for selected category -->
+            <div class="main-panel">
+                <div class="panel-header">
+                    <h2 id="panel-title">📄 All Files</h2>
+                    <span class="badge" id="panel-count">0 files</span>
+                </div>
+                <div id="results" class="results">
+                    <div class="loading">Select a category to browse</div>
+                </div>
+                <div id="detail" class="file-detail" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // --------------------------------------------------------------------
+        // 1. Load and render the hierarchy tree
+        // --------------------------------------------------------------------
+        async function loadHierarchy() {
+            const container = document.getElementById('category-tree');
+            container.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const res = await fetch('/api/hierarchy');
+                const data = await res.json();
+                if (data.error) {
+                    container.innerHTML = `<div class="loading">❌ ${data.error}</div>`;
+                    return;
+                }
+                
+                // Build a tree structure from flat list
+                const map = {};
+                const roots = [];
+                data.forEach(node => {
+                    map[node.category_id] = { ...node, children: [] };
+                });
+                data.forEach(node => {
+                    if (node.parent_id && map[node.parent_id]) {
+                        map[node.parent_id].children.push(map[node.category_id]);
+                    } else {
+                        roots.push(map[node.category_id]);
+                    }
+                });
+                
+                // Render tree
+                container.innerHTML = '<ul class="category-tree" id="tree-root"></ul>';
+                const rootEl = document.getElementById('tree-root');
+                roots.forEach(root => {
+                    renderCategory(rootEl, root, 0);
+                });
+                
+                // Auto-select first category (optional)
+                const firstCat = document.querySelector('.cat-item');
+                if (firstCat) {
+                    firstCat.click();
+                }
+            } catch (err) {
+                container.innerHTML = `<div class="loading">❌ Error: ${err.message}</div>`;
+            }
+        }
+        
+        function renderCategory(parentEl, node, depth) {
+            const li = document.createElement('li');
+            const hasChildren = node.children && node.children.length > 0;
+            
+            const item = document.createElement('div');
+            item.className = 'cat-item';
+            item.dataset.path = node.path;
+            item.dataset.id = node.category_id;
+            item.style.paddingLeft = (10 + depth * 8) + 'px';
+            item.innerHTML = `
+                <span class="icon">${node.icon || '📁'}</span>
+                <span class="name">${node.name}</span>
+                <span class="count" id="count-${node.category_id}">0</span>
+            `;
+            
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Update active state
+                document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                // Load files for this category
+                loadFiles(node.path, node.name);
+                // Load child counts
+                loadChildCounts(node.category_id);
+            });
+            
+            li.appendChild(item);
+            
+            if (hasChildren) {
+                const ul = document.createElement('ul');
+                ul.className = 'sub-tree';
+                node.children.forEach(child => {
+                    renderCategory(ul, child, depth + 1);
+                });
+                li.appendChild(ul);
+            }
+            
+            parentEl.appendChild(li);
+            
+            // Fetch count for this category asynchronously
+            fetchCount(node.path, node.category_id);
+        }
+        
+        // --------------------------------------------------------------------
+        // 2. Fetch category counts
+        // --------------------------------------------------------------------
+        async function fetchCount(path, id) {
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(path)}&type=category`);
+                const data = await res.json();
+                const count = data.length || 0;
+                const el = document.getElementById(`count-${id}`);
+                if (el) el.textContent = count;
+            } catch (e) {
+                // ignore
+            }
+        }
+        
+        async function loadChildCounts(parentId) {
+            // Recursively fetch counts for children (optional)
+            // We already fetched individually above.
+        }
+        
+        // --------------------------------------------------------------------
+        // 3. Load files for a category
+        // --------------------------------------------------------------------
+        async function loadFiles(path, name) {
+            const resultsDiv = document.getElementById('results');
+            const detailDiv = document.getElementById('detail');
+            detailDiv.style.display = 'none';
+            
+            document.getElementById('panel-title').textContent = `📄 ${name || path}`;
+            resultsDiv.innerHTML = '<div class="loading">🔍 Loading files...</div>';
+            
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(path)}&type=category`);
+                const data = await res.json();
+                
+                document.getElementById('panel-count').textContent = `${data.length} files`;
+                
+                if (data.length === 0) {
+                    resultsDiv.innerHTML = '<div class="empty">😕 No files in this category</div>';
+                    return;
+                }
+                
+                resultsDiv.innerHTML = data.map(file => `
+                    <div class="result-item" onclick="showDetail('${file.md5}')">
+                        <div class="icon">${file.icon || '📄'}</div>
+                        <div class="info">
+                            <div class="name">${escapeHtml(file.filename)}</div>
+                            <div class="meta">
+                                ${file.file_type || 'Unknown'} · 
+                                ${formatSize(file.size_bytes)} · 
+                                ${file.device_type || 'Unknown device'}
+                            </div>
+                        </div>
+                        <span class="badge ${file.status || ''}">${file.status || 'unknown'}</span>
+                    </div>
+                `).join('');
+            } catch (err) {
+                resultsDiv.innerHTML = `<div class="loading">❌ Error: ${err.message}</div>`;
+            }
+        }
+        
+        // --------------------------------------------------------------------
+        // 4. File detail view (same as index.html)
+        // --------------------------------------------------------------------
+        function showDetail(md5) {
+            const detailDiv = document.getElementById('detail');
+            detailDiv.style.display = 'block';
+            detailDiv.innerHTML = '<div class="loading">Loading details...</div>';
+            
+            fetch(`/api/files/${md5}`)
+                .then(res => res.json())
+                .then(file => {
+                    if (file.error) {
+                        detailDiv.innerHTML = `<div class="loading">❌ ${file.error}</div>`;
+                        return;
+                    }
+                    
+                    let html = `<h3>📄 ${escapeHtml(file.filename)}</h3>`;
+                    html += `<div class="field"><span class="label">MD5</span><span class="value"><code>${file.md5}</code></span></div>`;
+                    html += `<div class="field"><span class="label">Type</span><span class="value">${file.file_type || 'Unknown'}</span></div>`;
+                    html += `<div class="field"><span class="label">Size</span><span class="value">${formatSize(file.size_bytes)}</span></div>`;
+                    html += `<div class="field"><span class="label">Status</span><span class="value"><span class="badge ${file.status || ''}">${file.status || 'unknown'}</span></span></div>`;
+                    html += `<div class="field"><span class="label">Device</span><span class="value">${file.device_type || 'Unknown'} · ${file.device_name || ''}</span></div>`;
+                    html += `<div class="field"><span class="label">Volume</span><span class="value">${file.volume_name || 'Unknown'}</span></div>`;
+                    html += `<div class="field"><span class="label">Path</span><span class="value"><code>${escapeHtml(file.absolute_path || file.relative_path || '')}</code></span></div>`;
+                    html += `<div class="field"><span class="label">Tags</span><span class="value">${file.tags || 'None'}</span></div>`;
+                    html += `<div class="field"><span class="label">Indexed</span><span class="value">${file.indexed_at ? new Date(file.indexed_at).toLocaleString() : 'Unknown'}</span></div>`;
+                    
+                    if (file.metadata && typeof file.metadata === 'object' && Object.keys(file.metadata).length > 0) {
+                        html += `<div class="field"><span class="label">Metadata</span><span class="value"><pre>${escapeHtml(JSON.stringify(file.metadata, null, 2))}</pre></span></div>`;
+                    }
+                    
+                    if (file.media_assets && file.media_assets !== '{}') {
+                        try {
+                            const assets = typeof file.media_assets === 'string' ? JSON.parse(file.media_assets) : file.media_assets;
+                            html += `<div class="field"><span class="label">Media Assets</span><span class="value"><pre>${escapeHtml(JSON.stringify(assets, null, 2))}</pre></span></div>`;
+                        } catch(e) {}
+                    }
+                    
+                    detailDiv.innerHTML = html;
+                    detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                })
+                .catch(err => {
+                    detailDiv.innerHTML = `<div class="loading">❌ Error: ${err.message}</div>`;
+                });
+        }
+        
+        // --------------------------------------------------------------------
+        // 5. Utility functions
+        // --------------------------------------------------------------------
+        function formatSize(bytes) {
+            if (!bytes || bytes === 0) return '0 B';
+            bytes = parseInt(bytes);
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            const val = bytes / Math.pow(k, i);
+            return val.toFixed(2) + ' ' + sizes[i];
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // --------------------------------------------------------------------
+        // 6. Init
+        // --------------------------------------------------------------------
+        document.addEventListener('DOMContentLoaded', loadHierarchy);
+    </script>
+</body>
+</html>
