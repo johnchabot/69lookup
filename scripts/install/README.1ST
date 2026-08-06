@@ -21,3 +21,20 @@ sqlite3 file_archive.db < schema.sql
 python3 app.py
 
 # 5. Open http://localhost:8080 and explore!
+
+
+
+WEB APP USING
+pip install flask
+
+# 2. Place app.py and the templates/ folder in your project directory
+
+# 3. Make sure your SQLite database exists (file_archive.db) and has the schema
+
+# 4. Set the DB path (optional)
+export DB_PATH=./file_archive.db
+
+# 5. Start the web server
+python3 app.py
+
+# 6. Open your browser to http://localhost:8080
