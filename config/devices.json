@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "device_types": {
+    "dvd": {
+      "description": "DVD Video Disc",
+      "icon": "💿",
+      "detection": {
+        "path_pattern": "^/Volumes/[A-Z0-9_]+$"
+      }
+    },
+    "bluray": {
+      "description": "Blu-ray Disc",
+      "icon": "💿",
+      "detection": {
+        "path_pattern": "^/Volumes/BD-[A-Z0-9]+$"
+      }
+    },
+    "nas": {
+      "description": "Network Attached Storage",
+      "icon": "🖥️",
+      "detection": {
+        "path_pattern": "^/mnt/.*$",
+        "mount_type": "nfs|smb|cifs"
+      }
+    },
+    "external_usb": {
+      "description": "External USB Drive",
+      "icon": "💾",
+      "detection": {
+        "path_pattern": "^/Volumes/.*$",
+        "mount_type": "external"
+      }
+    },
+    "icloud": {
+      "description": "iCloud Drive",
+      "icon": "☁️",
+      "detection": {
+        "path_pattern": "^.*/Library/Mobile Documents/com~apple~CloudDocs/.*$"
+      }
+    },
+    "wsl_mount": {
+      "description": "WSL Mount (Windows Subsystem for Linux)",
+      "icon": "🐧",
+      "detection": {
+        "path_pattern": "^/mnt/[a-z]/.*$"
+      }
+    }
+  }
+}
