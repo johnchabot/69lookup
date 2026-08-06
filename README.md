@@ -32,7 +32,12 @@ tools/
 
     app.py uses the same default path, but you can override via environment variable.
 
+
+
+
 install/
+ schema.sql - Full schema with tables, indexes, and views — placed at the project root.
+ hierarchy_seed.sql lace at the project root. It inserts all categories and subcategories from our extensive taxonomy.)
 
 Workflow:
 file_ingest.sh pull a1b2c3d4 md5  
@@ -82,20 +87,15 @@ resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(base
    ├── migrate_md_to_sqlite.sh
 │   └── db_init.sh
             
-├── web/
-│   ├── app.py                  # Flask web UI
 │   └── templates/
 │       ├── index.html
 │       └── browse.html
-├── schema.sql                  # SQLite schema
 ├── file_archive.db             # Main SQLite database (created on first run)
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
-└── logs/
 
 
 supporting scripts
 
-install scripts
  • scene_detection.sh     - Advanced FFmpeg scene detection   ││  │
 │  │  │  • transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper ││  │
 │  │  │  • get_filetype_metadata.sh - Type-specific metadata parsers  ││  │
@@ -105,13 +105,8 @@ install scripts
 │  │  │  • db_init.sh             - Initialize markdown database      ││  │
 │  │  │  • generate_stats.sh      - Database statistics              ││  │
 │  │  │  • export_from_markdown.sh - Export to CSV/JSON  
-
-    
-there are actually many dependencies you liar
-    ✅ jq, 
-    ✅ pdf
-    ✅ ffmpeg, ffprobe
-    ✅ 
+Hierarchy Manager Script (hierarchy_manager.sh)
+   
   
 PAY EXTRA FOR
     ✅ Transcript extraction for videos (saved as .srt and .vtt)
@@ -137,9 +132,6 @@ rules
 Conflict Resolution Rules (conflict_rules.json)
 
 
-scripts
-Hierarchy Manager Script (hierarchy_manager.sh)
-
  Type         │ DVD, Blu-ray, External USB, NAS, Cloud  │    │      │
 │  │  │ Volume Name  │ "DVD_VIDEO", "iCloud Drive", "Media"    │    │      │
 │  │  │ Serial       │ Unique hardware or volume identifier    │    │      │
@@ -154,20 +146,4 @@ semantic meaning:
     Cloud sync → iCloud Drive, OneDrive, Dropbox
     System volume → APFS volume name, UUID
 
-~/file_ingest/
-├── files_index.md          # Database
-├── media_cache/            # All generated media assets
-│   ├── thumbnails/         # Thumbnail images
-│   │   └── {md5}.jpg
-│   ├── scenes/             # Scene change frames
-│   │   └── {md5}/
-│   │       ├── scene_001.jpg
-│   │       ├── scene_002.jpg
-│   │       └── scene_003.jpg
-│   ├── transcripts/        # Subtitle files
-│   │   └── {md5}/
-│   │       ├── {md5}.srt
-│   │       └── {md5}.vtt
-│   └── metadata/           # Extracted metadata
-│       └── {md5}.json
-└── logs/
+
