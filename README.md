@@ -5,36 +5,24 @@ it's like file_id.diz but kinda better
  Meaningfully understand every single file -- spanning eras, formats, devices 
  "A file is not just bytes but echos in multidimensional space"
 
-    ✅ Human-first, then JSON and C02 footprint
-    ✅ Transparent and self-documenting somehow
+    ✅ Human-first < JSON5, low C02 footprint
+    ✅ Trawl your files (check, add, pull)
+ 
+    ✅ Bash-driven "Workflow Engine" that uses JSON, YAML, ND and "logic"
+    ✅ We trade "MD5 hash + filename" for "helpful metadata" safely
+       ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
 
 ├── scripts/
-│   ├── trawl.sh                      # Main dispatcher (SQLite-enabled)
-│   ├── classify_filetype.sh         # see whats inside
-│   ├── device_detector.sh         # location matters
+│   ├── trawl.sh                     # scrape by (SQLite-enabled)
+│   ├── classify_filetype.sh         # look inside
+│   ├── device_detector.sh           # context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, icloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
 │   ├── hierarchy_manager.sh
 │   ├── media_tools.sh
 
-    hierarchy_manager.sh
-
-    media_tools.sh
-
     schema.sql
-
-
-✅ Trawl your files (check, add, pull)
-✅ Transparent and self-documenting somehow
-✅ Zero dependencies
-
-    
-
-better than file_id.diz, how exactly
-    ✅ Bash Calls a "Workflow Engine" that uses JSON, YAML, ND and "logic"
-    ✅ We trade "MD5 hash + filename" for "helpful metadata" safely
-
-Privacy Doesn't Meta
+device_detector.sh  Can load additional metadata from devices.json (if you want to define custom metadata per device type).
 
 "Location" is not just a path string. It's a composition of: 
 * Device × Volume × Path × Context
