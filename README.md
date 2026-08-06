@@ -17,14 +17,26 @@ apps/
 
 scripts/
  trawl.sh                     # check/add/pull/scrape by (SQLite-enabled)
+ 
  classify_filetype.sh         # look inside File type/era detection 
+ 
  device_detector.sh           # Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
+ 
  hierarchy_manager.sh  (path, get_category, assign, suggest, resolve_conflict, detect_conflicts    Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
+ 
  media_tools.sh               # (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
 
 tools/
 
 install/
+
+Workflow:
+file_ingest.sh pull a1b2c3d4 md5  
+
+classify_filetype.sh   Identifies what a file IS:  
+device_detector.sh   nswers: WHERE did this file come from? 
+ hierarchy_manager.sh HOW should we organize this file?  
+   media_tools.sh      Enriches files with derived media assets: 
 
 
     schema.sql
@@ -75,17 +87,6 @@ resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(base
 ├── file_archive.db             # Main SQLite database (created on first run)
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
 └── logs/
-
-│     • media_tools.sh     -              │
-│     • migrate_md_to_sqlite.sh - Migration to SQLite     
-
-Workflow:
-file_ingest.sh pull a1b2c3d4 md5  
-
-classify_filetype.sh   Identifies what a file IS:  
-device_detector.sh   nswers: WHERE did this file come from? 
- hierarchy_manager.sh HOW should we organize this file?  
-   media_tools.sh      Enriches files with derived media assets: 
 
 
 supporting scripts
