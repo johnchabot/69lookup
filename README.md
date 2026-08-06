@@ -2,7 +2,7 @@
 it's like file_id.diz but more better
 
     ✅ Human-first, then JSON and C02 footprint
-    ✅ SMB-friendly – Works over network shares
+    🎯 Smart metadata extraction (different tools for different types)
     ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
@@ -17,3 +17,7 @@ there are actually many dependencies you liar
     ✅ 
   
 simple TUI (Terminal UI) for browsing the database
+
+    ✅ Human-first, then JSON and C02 footprint
+    🎯 Smart metadata extraction (different tools for different types)
+   🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
