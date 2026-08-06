@@ -27,6 +27,13 @@ DB_PATH, CACHE_PATH, LOG_DIR
     app.py uses the same default path, but you can override via environment variable.
      trawl.sh will automatically use the database file set by DB_PATH (default: ./file_archive.db).
 
+
+# Start the web UI
+python3 apps/app.py
+
+# Or override the DB path
+DB_PATH=/custom/path/file_archive.db python3 apps/app.py
+
 WEB APP USING
 pip install flask
 
