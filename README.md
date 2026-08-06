@@ -12,25 +12,43 @@ it's like file_id.diz but kinda better
     ✅ We trade "MD5 hash + filename" for "helpful metadata" safely
     ✅ Transparent and self-documenting somehow
     ✅ Zero fscks given
+  
+PAY EXTRA FOR  
+    ✅ Transcript extraction for videos (saved as .srt and .vtt)
+    ✅ simple TUI (Terminal UI) for browsing the database
+    🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
 
-69LOOKUP
+Understanding METADATA (What's inside is what counts)  
+Image (Dimensions, Colours, Megapixels, GPS)  
+ 3D (Favets, Verteces, Format)  
+Video (FPS, Height, Duration, 
+Audio (Channels, Bitrate, Sample Rate, Duration
+ Music (Band, Title, Song, 
+Binaries
+ Archive
+ ISO
+ Games
+ Apps
+    
+
+69LOOKUP  
 • trawl.sh                     # (check/add/pull/scrape)  
 • classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS  
 • device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown  
 • hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts   
 • media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks  
 
-apps/
-• app.py                  # powers search, statistics, file details, responsive mobile/desktop
- 
-apps/templates/
+apps/  
+• app.py                  # powers search, statistics, file details, responsive mobile/desktop  
+   
+apps/templates/  
 • index.html               # ransforms your SQLite database into a powerful, user-friendly search tool. primary discovery interface — a fast, flexible search engine for your digital archive. Its job is to help you find any file, anywhere, in seconds.
-• browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search
-
-tools/
-• scene_detection.sh       # advanced scene detection 
-• transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper  
-• get_filetype_metadata.sh - Type-specific metadata parsers  
+• browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search  
+  
+tools/  
+• scene_detection.sh       # advanced scene detection  mediachache/scene/<md5>/-HHMMSS.jpg  
+• transcript_extract.sh    # Supports OpenAI Whisper, Whisper.cpp (fast CPU), and Vosk (lightweight offline)   media_cache/transcripts/<md5>/<md5>.srt and .vtt  
+• get_filetype_metadata.sh  # Type-specific metadata parsers  
 • parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser  
 • parse_document_metadata.sh - PDF, DOCX, MD parser  
 • parse_archive_metadata.sh - ZIP, RAR, 7Z parser  
@@ -45,24 +63,9 @@ install/
 • db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
 
 
-Workflow:
-file_ingest.sh pull a1b2c3d4 md5  
 
-"Location" is not just a path string. It's a composition of: 
-* Device × Volume × Path × Context
-* Location (Device) × Type (Hierarchy) × Content (MD5) × Context (Metadata) × History (Timeline)
 
-Understanding METADATA (What's inside is what counts) 
-Image (Dimensions, Colours, Megapixels, GPS)
- 3D (Favets, Verteces, Format)
-Video (FPS, Height, Duration, 
-Audio (Channels, Bitrate, Sample Rate, Duration
- Music (Band, Title, Song, 
-Binaries
- Archive
- ISO
- Games
- Apps
+
 
 
 # Suggest category
@@ -80,10 +83,6 @@ resolution=$(./hierarchy_manager.sh resolve_conflict "$conflicts" "$md5" "$(base
 ├── file_archive.db             # Main SQLite database (created on first run)
 ├── files_index.md              # Optional Markdown backup (keep for human reading)
 
-PAY EXTRA FOR
-    ✅ Transcript extraction for videos (saved as .srt and .vtt)
-    ✅ simple TUI (Terminal UI) for browsing the database
-    🏷️ Auto-tagging  📊 Reporting and stats  🔍 Search filtering
 
 
 schema
