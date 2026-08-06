@@ -1,0 +1,117 @@
+#!/bin/bash
+# migrate_md_to_sqlite.sh - Migrate from Markdown to SQLite database
+
+set -euo pipefail
+
+DB_FILE="${1:-./file_archive.db}"
+MD_FILE="${2:-./files_index.md}"
+SQLITE="sqlite3"
+
+echo "🔄 Migrating from Markdown to SQLite"
+echo "  Source: $MD_FILE"
+echo "  Target: $DB_FILE"
+
+# Create database schema
+echo "📐 Creating schema..."
+$SQLITE "$DB_FILE" < schema.sql
+
+# Parse Markdown and insert into SQLite
+echo "📥 Importing records..."
+
+# Extract each record from Markdown
+awk '/^### [0-9:-]+ \| / {
+    # Start of a record
+    record=""
+    md5=""
+    filename=""
+    file_type=""
+    size=0
+    tags=""
+    status=""
+    device=""
+    volume=""
+    serial=""
+    device_type=""
+    category=""
+    subcategory=""
+    hierarchy=""
+    metadata="{}"
+    media_assets="{}"
+    created=""
+    modified=""
+    
+    # Get filename from header
+    header=$0
+    gsub(/^### [0-9:-]+ \| /, "", header)
+    filename=header
+    
+    # Read the rest of the record
+    while (getline > 0) {
+        if ($0 == "---") break
+        
+        # Extract fields
+        if ($0 ~ /^\*\*MD5\*\*:/) {
+            md5=$0; gsub(/.*: `/, "", md5); gsub(/`/, "", md5)
+        }
+        else if ($0 ~ /^\*\*File Type\*\*:/) {
+            file_type=$0; gsub(/.*: `/, "", file_type); gsub(/`/, "", file_type)
+        }
+        else if ($0 ~ /^\*\*Size\*\*:/) {
+            size=$0; gsub(/.*: /, "", size); gsub(/ bytes.*/, "", size)
+        }
+        else if ($0 ~ /^\*\*Tags\*\*:/) {
+            tags=$0; gsub(/.*: `/, "", tags); gsub(/`/, "", tags)
+        }
+        else if ($0 ~ /^\*\*Status\*\*:/) {
+            status=$0; gsub(/.*: `/, "", status); gsub(/`/, "", status)
+        }
+        else if ($0 ~ /^\*\*Device\*\*:/) {
+            device=$0; gsub(/.*: `/, "", device); gsub(/`/, "", device)
+        }
+        else if ($0 ~ /^\*\*Volume\*\*:/) {
+            volume=$0; gsub(/.*: `/, "", volume); gsub(/`/, "", volume)
+        }
+        else if ($0 ~ /^\*\*Serial\*\*:/) {
+            serial=$0; gsub(/.*: `/, "", serial); gsub(/`/, "", serial)
+        }
+        else if ($0 ~ /^\*\*Device Type\*\*:/) {
+            device_type=$0; gsub(/.*: `/, "", device_type); gsub(/`/, "", device_type)
+        }
+        else if ($0 ~ /^\*\*Category\*\*:/) {
+            category=$0; gsub(/.*: `/, "", category); gsub(/`/, "", category)
+        }
+        else if ($0 ~ /^\*\*Subcategory\*\*:/) {
+            subcategory=$0; gsub(/.*: `/, "", subcategory); gsub(/`/, "", subcategory)
+        }
+        else if ($0 ~ /^\*\*Hierarchy\*\*:/) {
+            hierarchy=$0; gsub(/.*: /, "", hierarchy)
+        }
+        else if ($0 ~ /^\*\*Metadata\*\*:/) {
+            # Extract metadata
+            meta=""
+            while (getline > 0 && $0 !~ /^---/ && $0 !~ /^###/) {
+                meta = meta " " $0
+            }
+            # Build JSON from metadata
+            # ... simplified for example
+            metadata="{\"raw\":\"" meta "\"}"
+        }
+    }
+    
+    # Generate SQL INSERT for this record
+    print "-- File: " filename
+    print "INSERT OR IGNORE INTO files (md5, filename, file_type, size_bytes, tags, status, metadata) VALUES ("
+    print "'" md5 "',"
+    print "'" filename "',"
+    print "'" file_type "',"
+    print size ","
+    print "'" tags "',"
+    print "'" status "',"
+    print "'" metadata "'"
+    print ");"
+}' "$MD_FILE" | $SQLITE "$DB_FILE"
+
+echo "✅ Migration complete!"
+echo "📊 Database stats:"
+$SQLITE "$DB_FILE" "SELECT COUNT(*) AS total_files FROM files;"
+$SQLITE "$DB_FILE" "SELECT file_type, COUNT(*) FROM files GROUP BY file_type;"
