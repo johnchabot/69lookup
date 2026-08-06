@@ -14,11 +14,11 @@ it's like file_id.diz but kinda better
     ✅ Zero fscks given
 
 69LOOKUP
-• trawl.sh                     # (check/add/pull/scrape)
-• classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS: 
-• device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown.
-• hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts, 
-• media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks
+• trawl.sh                     # (check/add/pull/scrape)  
+• classify_filetype.sh         # look inside File type/era detection  Identifies what a file IS  
+• device_detector.sh           # WHERE did this file come from?  Device/volume detection  context -extract hardware serial via diskutil (macOS) or udevadm (Linux)., Gets mount point, device node, filesystem, volume name, and UUID + Uses heuristics (paths, filesystem types, presence of VIDEO_TS/BDMV) to classify as dvd, bluray, cd_rom, nas, external_usb, ddloud, onedrive, dropbox, system_volume, wsl_mount, or unknown  
+• hierarchy_manager.sh       # (path, get_category, assign, suggest, resolve_conflict, detect_conflicts  HOW should we organize this file?   Taxonomy & conflict resolution  # categories and subcategories lookup, 	Maps file types, Turns category + subcategory (like videos/movies) into a human‑readable string like Videos → Movies, detects conflicts   
+• media_tools.sh               # Enriches files with derived media assets:  (thumbnail/scene/transcript/metadata) Thumbnail, scene detection, transcript generation,metadata extraction, SRT → VTT, Caching, dependenciy checks  
 
 apps/
 • app.py                  # powers search, statistics, file details, responsive mobile/desktop
@@ -28,17 +28,17 @@ apps/templates/
 • browse.html                 # hierarchy tree, category counts, click to browse, file details, responsive, integrates wtih api/search
 
 tools/
-• scene_detection.sh     - Advanced FFmpeg scene detection  
-• transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper 
+• scene_detection.sh       # advanced scene detection 
+• transcript_extract.sh  - Whisper/Vosk/Whisper.cpp wrapper  
 • get_filetype_metadata.sh - Type-specific metadata parsers  
 • parse_3d_metadata.sh   - OBJ, PLY, GLTF, DICOM parser  
-• parse_document_metadata.sh - PDF, DOCX, MD parser 
+• parse_document_metadata.sh - PDF, DOCX, MD parser  
 • parse_archive_metadata.sh - ZIP, RAR, 7Z parser  
-• generate_stats.sh      - Database statistics
-• export_from_markdown.sh - Export to CSV/JSON  
-Hierarchy Manager Script (hierarchy_manager.sh)
-
-install/
+• generate_stats.sh      - Database statistics  
+• export_from_markdown.sh - Export to CSV/JSON   
+Hierarchy Manager Script (hierarchy_manager.sh)  
+  
+install/  
 • schema.sql   # Full schema with tables, indexes, and views — placed at the project root.
  hierarchy_seed.sql # It inserts all categories and subcategories from our extensive taxonomy.)
 • install.sh   #checks OS info, script +x, dependencies (sqllite3, jq + ffmpeg, ffprobe, exiftool, python3, flask), database (path, tables + initiate or fix), cache directory test, log directory 
