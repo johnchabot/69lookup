@@ -13,6 +13,9 @@ it's like file_id.diz but kinda better
     ✅ Transparent and self-documenting somehow
     ✅ Zero dependencies
 
+
+I NEED TO ASK FOR AN Updated app.py (add the /api/hierarchy endpoint)
+
 apps
  app.py - search, statistics, filel details, responsive mobile/desktop
  templates/
