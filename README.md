@@ -66,6 +66,18 @@ install/
 • db_init.sh     # Checks for dependencies (sqlite3, jq), warns about optional tools (ffmpeg, exiftool), Validates that schema.sql exists.Creates a new SQLite database (or overwrites if --force), Applies the schema (tables, indexes, views), Verifies that tables were created and shows a success summary.
 
 
+1. Specialized Format Metadata (Deeper, format‑specific)
+
+While get_filetype_metadata.sh covers the basics, we didn't write dedicated deep parsers for:
+
+    Documents (parse_document_metadata.sh) – Extract title, author, word count, page count, embedded images, etc. for PDF, DOCX, ODT, MD.
+
+    Archives (parse_archive_metadata.sh) – Detailed listing of archive contents (file names, sizes, compression ratios).
+
+    Audio (parse_audio_metadata.sh) – Deep ID3/FLAC tag extraction (album, artist, genre, bitrate, sample rate).
+
+    Code/Web (parse_code_metadata.sh) – Detect programming language, line count, function count, dependencies.
+
 ✅ Dependencies
 Tool	Used For	Install
 ffprobe	Video/Audio metadata	brew install ffmpeg (macOS) / apt install ffmpeg (Linux)
